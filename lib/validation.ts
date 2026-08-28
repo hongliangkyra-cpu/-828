@@ -1,0 +1,6 @@
+import { z } from 'zod';
+
+export const slugSchema = z.string().min(2).max(120).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use lowercase letters, numbers and hyphens only.');
+export const categorySchema = z.object({ name: z.string().min(2).max(100), slug: slugSchema, description: z.string().max(500), type: z.enum(['POST', 'PRODUCT']), sortOrder: z.coerce.number().int().min(0).max(9999) });
+export const postSchema = z.object({ title: z.string().min(3).max(180), slug: slugSchema, excerpt: z.string().max(500), content: z.string().min(1), coverImage: z.string().max(1000), coverImageAlt: z.string().max(180), categoryId: z.string().min(1), status: z.enum(['DRAFT', 'PUBLISHED']), authorName: z.string().min(2).max(100), seoTitle: z.string().max(70), seoDescription: z.string().max(170) });
+export const productSchema = z.object({ name: z.string().min(2).max(180), slug: slugSchema, model: z.string().max(100), shortDescription: z.string().max(500), description: z.string().min(1), categoryId: z.string().min(1), coverImage: z.string().max(1000), features: z.string(), specifications: z.string(), applications: z.string(), status: z.enum(['DRAFT', 'PUBLISHED']), sortOrder: z.coerce.number().int().min(0).max(9999), seoTitle: z.string().max(70), seoDescription: z.string().max(170) });
